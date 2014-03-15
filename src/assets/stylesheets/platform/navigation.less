@@ -1,0 +1,40 @@
+/**
+ *= depend_on colors.less
+ */
+
+@import "colors.less";
+
+.navbar-inverse {
+	background-color: @top-navbar-background;
+}
+
+.sidebar {
+	background-color: @side-navbar-background;
+}
+
+.nav-sidebar > li > a {
+	color: @navbar-link-color;
+	background-color: @navbar-link-background;
+}
+
+.nav-sidebar > .active > a {
+	border: 1px solid #333;
+	color: @navbar-active-color;
+	background-color: @navbar-active-background;
+}
+
+.nav-sidebar > li > a:hover, .nav-sidebar > li > a:focus {
+	background-color: @navbar-link-background;
+	color: @navbar-link-background;
+	text-shadow: -1px 0 #bbb, 0 1px #bbb, 1px 0 #bbb, 0 -1px #bbb;
+}
+
+.nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus {
+	background-color: @navbar-active-background;
+	color: @navbar-active-background;
+	text-shadow: -1px 0 #333, 0 1px #333, 1px 0 #333, 0 -1px #333;
+}
+
+.sidebar i {
+    font-size: 25px;
+}

@@ -1,0 +1,30 @@
+{
+    "name": "codesleeve/platform",
+    "description": "",
+    "authors": [
+        {
+            "name": "Kelt",
+            "email": "kelt@codesleeve.com"
+        },
+        {
+            "name": "Travis",
+            "email": "travis@codesleeve.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.1.*",
+        "codesleeve/asset-pipeline": "dev-master",
+        "codesleeve/stapler": "dev-master",
+        "codesleeve/fixture": "dev-master"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Codesleeve\\Platform\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
