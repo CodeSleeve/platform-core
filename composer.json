@@ -1,6 +1,7 @@
 {
-    "name": "codesleeve/platform",
-    "description": "",
+    "name": "codesleeve/platform-core",
+    "description": "Platform core contains the core functionality of platform which is the backend admin panel, users, roles, overall navigation. It also includes general helpers (such as macros)",
+    "license": "MIT",
     "authors": [
         {
             "name": "Kelt",
