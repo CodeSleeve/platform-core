@@ -1,9 +1,8 @@
 <?php namespace Codesleeve\Platform;
 
-use Illuminate\Support\ServiceProvider;
 use App, Config, DirectoryIterator, Redirect, View;
 
-class CoreServiceProvider extends ServiceProvider
+class CoreServiceProvider extends \Illuminate\Support\ServiceProvider
 {
 	/**
 	 * Indicates if loading of the provider is deferred.
@@ -171,7 +170,7 @@ class CoreServiceProvider extends ServiceProvider
 		$asset = $this->app->make('asset');
 		$config = $asset->getConfig();
 
-		$config['paths'][] = str_replace($config['base_path'].'/', '', realpath($base . "/javascripts"));
+		$config['paths'][] = str_replace($config['base_path'] .'/', '', realpath($base . "/javascripts"));
 		$config['paths'][] = str_replace($config['base_path'] .'/', '', realpath($base . "/stylesheets"));
 		$config['paths'][] = str_replace($config['base_path'] .'/', '', realpath($base . "/vendors"));
 
