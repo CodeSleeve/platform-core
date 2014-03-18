@@ -18,3 +18,4 @@
 //= require ckeditor/ckeditor
 //= require config/ajaxSetup
 //= require_tree bindings
+//-- = require_platform_packages

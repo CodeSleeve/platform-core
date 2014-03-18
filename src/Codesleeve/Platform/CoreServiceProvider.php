@@ -171,7 +171,7 @@ class CoreServiceProvider extends ServiceProvider
 		$asset = $this->app->make('asset');
 		$config = $asset->getConfig();
 
-		$config['paths'][] = str_replace($config['base_path'].'/', '', realpath($base . "/javascripts"));
+		$config['paths'][] = str_replace($config['base_path'] .'/', '', realpath($base . "/javascripts"));
 		$config['paths'][] = str_replace($config['base_path'] .'/', '', realpath($base . "/stylesheets"));
 		$config['paths'][] = str_replace($config['base_path'] .'/', '', realpath($base . "/vendors"));
 

@@ -37,7 +37,38 @@ class PlatformSetupCommand extends Command
      */
     public function fire()
     {
-        // touch(app_path() . '/database/development.sqlite');
+        $projectRoot = realpath(base_path());
+        $platformRoot = realpath(__DIR__ . '/../../../setup');
+
+        dd($projectRoot, $platformRoot);
+    }
+
+    /**
+     * Copy over files
+     *
+     * @param  [type] $source [description]
+     * @param  [type] $dest   [description]
+     * @return [type]         [description]
+     */
+    private function xcopy($source, $dest)
+    {
+        $base = base_path();
+
+        foreach ($iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($source, \RecursiveDirectoryIterator::SKIP_DOTS), \RecursiveIteratorIterator::SELF_FIRST) as $item)
+        {
+            if ($item->isDir())
+            {
+                if (!is_dir($dest . '/' . $iterator->getSubPathName()))
+                {
+                    mkdir($dest . '/' . $iterator->getSubPathName());
+                }
+            }
+            else
+            {
+                copy($item, $dest . '/' . $iterator->getSubPathName());
+                $this->line('   Copying -> ' . str_replace($base, '', $dest . '/' . $iterator->getSubPathName()));
+            }
+        }
     }
 
     /**
@@ -62,6 +93,22 @@ class PlatformSetupCommand extends Command
         return array(
             // array('example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null),
         );
+    }
+
+}
+
+        $structure = __DIR__ . '/../../../../structure';
+        $base = base_path();
+
+        $this->line('');
+        $this->line('Creating initial directory structure and copying some general purpose assets over.');
+        $this->line('');
+
+        $this->xcopy(realpath($structure), realpath($base));
+
+        $this->line('');
+        $this->line('Finished. Have a nice day!');
+        $this->line('         - Codesleeve Team');
     }
 
 }

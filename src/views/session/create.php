@@ -1,4 +1,4 @@
-<?= Form::open(['url' => platform_route("session.store"), 'method' => 'POST', 'class' => 'form-signin form']) ?>
+<?= Form::open(['url' => platform_route("sessions.store"), 'method' => 'POST', 'class' => 'form-signin form']) ?>
 
 	<h2 class="form-signin-heading">Please sign in</h2>
 

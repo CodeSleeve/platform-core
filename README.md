@@ -16,7 +16,7 @@ then add the service provider to the `providers` array in your `app\config\app.p
 then run commands for database
 
 ```
-	php artisan migrate --package codesleeve/platform
+	php artisan migrate --package codesleeve/platform-core
 	php artisan db:seed --class "Codesleeve\Platform\Seeds\Platform"
 ```
 
