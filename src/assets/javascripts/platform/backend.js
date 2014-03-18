@@ -15,7 +15,6 @@
 //= require twitter/js/bootstrap
 //= require chosen/chosen.jquery
 //= require bootbox/bootbox
-//= require ckeditor/ckeditor
 //= require config/ajaxSetup
 //= require_tree bindings
 //-- = require_platform_packages
