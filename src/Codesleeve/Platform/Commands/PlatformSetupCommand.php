@@ -37,38 +37,82 @@ class PlatformSetupCommand extends Command
      */
     public function fire()
     {
-        $projectRoot = realpath(base_path());
-        $platformRoot = realpath(__DIR__ . '/../../../setup');
+        $this->yes = $this->option('yes');
 
-        dd($projectRoot, $platformRoot);
+        $this->copySetupFolder();
     }
 
     /**
-     * Copy over files
+     * This command will copy the setup folder for us
      *
-     * @param  [type] $source [description]
-     * @param  [type] $dest   [description]
-     * @return [type]         [description]
+     * @return void
+     */
+    private function copySetupFolder()
+    {
+        $projectRoot = realpath(base_path());
+        $platformRoot = realpath(__DIR__ . '/../../../setup');
+
+        $this->line("We are going to copy some common files and setup to your project root.");
+
+        $continue = $this->yes ? 'y' : $this->ask("Would you like to continue? [Y/n]");
+
+        if (strtolower(trim($continue)) != 'n')
+        {
+            $this->xcopy($platformRoot, $projectRoot);
+        }
+    }
+
+    /**
+     * Copy over files from $source to $dest recursively
+     *
+     * @param  string $source
+     * @param  string $dest
+     * @return void
      */
     private function xcopy($source, $dest)
     {
-        $base = base_path();
-
         foreach ($iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($source, \RecursiveDirectoryIterator::SKIP_DOTS), \RecursiveIteratorIterator::SELF_FIRST) as $item)
         {
+            $target = $dest . '/' . $iterator->getSubPathName();
+
             if ($item->isDir())
             {
-                if (!is_dir($dest . '/' . $iterator->getSubPathName()))
+                if (!is_dir($target))
                 {
-                    mkdir($dest . '/' . $iterator->getSubPathName());
+                    mkdir($target);
                 }
             }
-            else
+            else if ($this->shouldWriteFileAt($target))
             {
-                copy($item, $dest . '/' . $iterator->getSubPathName());
-                $this->line('   Copying -> ' . str_replace($base, '', $dest . '/' . $iterator->getSubPathName()));
+                copy($item, $target);
+                $this->line('   -> ' . $iterator->getSubPathName());
             }
         }
+    }
+
+    /**
+     * Ask the user if they want to shouldWriteFileAt existing files
+     *
+     * @param  string $path
+     * @return boolean
+     */
+    private function shouldWriteFileAt($path)
+    {
+        if ($this->yes)
+        {
+            return true;
+        }
+
+        if (!file_exists($path))
+        {
+            return true;
+        }
+
+        $path = str_replace(base_path(), '', $path);
+
+        $override = $this->ask("$path already exists, override? [y/N]");
+
+        return (strtolower(trim($override)) == 'y') ? true : false;
     }
 
     /**
@@ -91,24 +135,8 @@ class PlatformSetupCommand extends Command
     protected function getOptions()
     {
         return array(
-            // array('example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null),
+            array('yes', 'y', InputOption::VALUE_NONE, 'If set we answer yes to all questions.'),
         );
-    }
-
-}
-
-        $structure = __DIR__ . '/../../../../structure';
-        $base = base_path();
-
-        $this->line('');
-        $this->line('Creating initial directory structure and copying some general purpose assets over.');
-        $this->line('');
-
-        $this->xcopy(realpath($structure), realpath($base));
-
-        $this->line('');
-        $this->line('Finished. Have a nice day!');
-        $this->line('         - Codesleeve Team');
     }
 
 }

@@ -17,4 +17,4 @@
 //= require bootbox/bootbox
 //= require config/ajaxSetup
 //= require_tree bindings
-//-- = require_platform_packages
+//= include_tree platform-publish-scripts
