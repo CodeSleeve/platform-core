@@ -13,7 +13,7 @@
 
 Route::filter('platform.csrf', function($route, $request)
 {
-	if (strtoupper($request->getMethod()) === 'GET') {
+	if (strtoupper($request->getMethod()) === 'GET' || App::environment() == "local") {
 		return;
 	}
 

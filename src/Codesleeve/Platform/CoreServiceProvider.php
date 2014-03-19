@@ -51,6 +51,7 @@ class CoreServiceProvider extends \Illuminate\Support\ServiceProvider
 		$base = __DIR__;
 
 		App::register('Codesleeve\AssetPipeline\AssetPipelineServiceProvider');
+		App::register('Codesleeve\Stapler\StaplerServiceProvider');
 	}
 
 	/**
