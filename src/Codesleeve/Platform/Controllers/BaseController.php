@@ -1,6 +1,6 @@
 <?php namespace Codesleeve\Platform\Controllers;
 
-use App, Auth, Controller, Route, User, View;
+use Auth, Controller, Route, View;
 
 use Codesleeve\Platform\Facades\Navigation;
 use Codesleeve\Platform\Facades\Breadcrumbs;
