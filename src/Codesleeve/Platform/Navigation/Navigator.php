@@ -1,20 +1,16 @@
 <?php namespace Codesleeve\Platform\Navigation;
 
-use Config, ArrayObject, StdClass, InvalidArgumentException;
+use ArrayObject, StdClass, InvalidArgumentException;
+use Codesleeve\Platform\Support\Collection;
 
-class Navigator extends ArrayObject
+class Navigator extends Collection
 {
 	/**
-	 * Create a new navigation object
+	 * List of required fields
 	 *
+	 * @var array
 	 */
-	public function __construct($items = array())
-	{
-		foreach ($items as $item)
-		{
-			$this->add($item);
-		}
-	}
+	protected $required = array('title', 'icon', 'url', 'shown', 'active');
 
 	/**
 	 * Return all the navigation items
@@ -23,7 +19,9 @@ class Navigator extends ArrayObject
 	 */
 	public function all()
 	{
-		return $this;
+		$this->sort();
+
+		return $this->items;
 	}
 
 	/**
@@ -31,7 +29,7 @@ class Navigator extends ArrayObject
 	 *
 	 * @param array $item
 	 */
-	public function add($item)
+	public function add(array $item)
 	{
 		$this->validate($item);
 
@@ -42,7 +40,62 @@ class Navigator extends ArrayObject
 			$obj->$attr = $value;
 		}
 
-		$this[] = $obj;
+		$this->items[] = $obj;
+	}
+
+	/**
+	 * Make Navigation Items Sortable
+	 *
+	 * @param  string $order [description]
+	 * @return [type]        [description]
+	 */
+	public function sort()
+	{
+    	$this->items->uasort(function($obj1, $obj2)
+    	{
+    		$title1 = $obj1->title;
+    		$title2 = $obj2->title;
+
+    		$priority1 = isset($obj1->priority) ? $obj1->priority : 0;
+    		$priority2 = isset($obj2->priority) ? $obj2->priority : 0;
+
+    		if ($priority1 < $priority2)
+    		{
+    			return 1;
+    		}
+
+    		if ($priority1 > $priority2)
+    		{
+    			return -1;
+    		}
+
+			if ($title1 === $title2)
+			{
+        		return 0;
+    		}
+
+    		if ($title1 < $title2)
+    		{
+    			return -1;
+    		}
+
+    		// ($title1 > $title2)
+    		return 1;
+    	});
+
+    	// since we want to update the indexes (0, 1, 2) then
+    	// we need to loop through and append to a new ArrayObject
+
+    	$sorted = new ArrayObject();
+
+    	foreach ($this->items as $item)
+    	{
+    		$sorted[] = $item;
+    	}
+
+    	$this->items = $sorted;
+
+		return $this;
 	}
 
 	/**
@@ -53,15 +106,18 @@ class Navigator extends ArrayObject
 	 */
 	private function validate($item)
 	{
-		$required = array('title', 'icon', 'url', 'shown', 'active');
+		$titleSelector = count($this->required) > 0 ? $this->required[0] : null;
 
-		foreach ($required as $attribute)
+		foreach ($this->required as $attribute)
 		{
 			if (!array_key_exists($attribute, $item))
 			{
-				$title = isset($item['title']) ? $item['title'] : 'Unknown';
+				$title = isset($item[$titleSelector]) ? $item[$titleSelector] : 'Unknown';
+
 				throw new InvalidArgumentException("The required attribute $attribute was not found for navigation item $title!");
 			}
 		}
 	}
+
+
 }
