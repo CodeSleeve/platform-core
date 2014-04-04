@@ -5,6 +5,13 @@ use ArrayObject,  ArrayAccess, Countable, Iterator;
 abstract class Collection implements ArrayAccess, Countable, Iterator
 {
 	/**
+	 * Cursor of the array
+	 *
+	 * @var int
+	 */
+	protected $cursor;
+
+	/**
 	 * Collection of items
 	 *
 	 * @var array
@@ -17,6 +24,8 @@ abstract class Collection implements ArrayAccess, Countable, Iterator
 	 */
 	public function __construct($items = array())
 	{
+		$this->cursor = 0;
+
 		$this->items = new ArrayObject;
 
 		foreach ($items as $item)

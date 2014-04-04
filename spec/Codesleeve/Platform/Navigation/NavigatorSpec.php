@@ -52,7 +52,7 @@ class NavigatorSpec extends ObjectBehavior
 		$this->add([ 'title' => 'Dashboard', 'icon' => 'fa-dashboard', 'url' => 'dashboard', 'shown' => true, 'active' => 'dashboard']);
 		$this->add([ 'title' => 'Roles', 'icon' => 'fa-eye', 'url' => 'roles.index', 'shown' => true, 'active' => 'roles' ]);
 
-		$items = $this->sort()->all();
+		$items = $this->all();
 
 		$items[0]->title->shouldBe('Dashboard');
 		$items[1]->title->shouldBe('Roles');
@@ -65,11 +65,10 @@ class NavigatorSpec extends ObjectBehavior
 		$this->add([ 'title' => 'Dashboard', 'icon' => 'fa-dashboard', 'url' => 'dashboard', 'shown' => true, 'active' => 'dashboard']);
 		$this->add([ 'title' => 'Roles', 'icon' => 'fa-eye', 'url' => 'roles.index', 'shown' => true, 'active' => 'roles', 'priority' => 99 ]);
 
-		$items = $this->sort()->all();
+		$items = $this->all();
 
 		$items[0]->title->shouldBe('Roles');
 		$items[1]->title->shouldBe('Dashboard');
 		$items[2]->title->shouldBe('Users');
     }
-
 }
