@@ -12,9 +12,12 @@
 //
 //= require jquery/jquery
 //= require jquery/jquery-ui-1.10.0.custom
+//= require jquery/jquery.hotkeys
+//= require angular/angular
 //= require twitter/js/bootstrap
 //= require chosen/chosen.jquery
 //= require bootbox/bootbox
 //= require config/ajaxSetup
+//= require summernote/summernote
 //= require_tree bindings
 //= include_tree platform-publish-scripts
