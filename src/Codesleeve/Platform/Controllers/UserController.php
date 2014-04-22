@@ -1,7 +1,7 @@
 <?php namespace Codesleeve\Platform\Controllers;
 
 use Codesleeve\Platform\Models\User;
-use Codesleeve\Platform\Models\Role;
+use Codesleeve\Platform\Models\Group;
 use Codesleeve\Platform\Validators\UserValidator;
 
 use View, Input, Auth, Session, Redirect, Response, App, Validator;
@@ -14,12 +14,12 @@ class UserController extends BaseController
 	 * @param User          $users
 	 * @param UserValidator $validator
 	 */
-	public function __construct(User $users, Role $roles)
+	public function __construct(User $users, Group $groups)
 	{
 		parent::__construct();
 
 		$this->users = $users;
-		$this->roles = $roles;
+		$this->groups = $groups;
 		$this->validator = new UserValidator($this->namespaced("UserController"));
 	}
 
@@ -46,9 +46,9 @@ class UserController extends BaseController
 	{
 		$user = $this->users->fill(Input::old());
 
-		$user->available_roles = $this->roles->lists('name', 'id');
+		$user->available_groups = $this->groups->lists('name', 'id');
 
-		$user->selected_roles = $user->roles()->select('roles.id AS id')->lists('id');
+		$user->selected_groups = $user->groups()->select('groups.id AS id')->lists('id');
 
 		$this->layout->nest('content', "platform::users.create", compact('user'));
 	}
@@ -68,7 +68,7 @@ class UserController extends BaseController
 
 		$user->save();
 
-		$user->roles()->sync(Input::get('role_ids'), []);
+		$user->groups()->sync(Input::get('group_ids'), []);
 
 		Session::flash('success', 'Created user succesfully');
 
@@ -98,9 +98,9 @@ class UserController extends BaseController
 	{
 		$user = $this->users->findOrFail($id);
 
-		$user->available_roles = $this->roles->lists('name', 'id');
+		$user->available_groups = $this->groups->lists('name', 'id');
 
-		$user->selected_roles = $user->roles()->select('roles.id AS id')->lists('id');
+		$user->selected_groups = $user->groups()->select('groups.id AS id')->lists('id');
 
 		$this->layout->nest('content', "platform::users.edit", compact('user'));
 	}
@@ -126,7 +126,7 @@ class UserController extends BaseController
 
 		$user->save();
 
-		$user->roles()->sync(Input::get('role_ids', []));
+		$user->groups()->sync(Input::get('group_ids', []));
 
 		Session::flash('success', 'Updated user successfully');
 

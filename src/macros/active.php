@@ -25,29 +25,32 @@
 |   <?= active('foobars.show', [42]) ?>
 |
 */
-function active($link, $parameters = [], $active = 'active', $inactive = null)
+if (!function_exists('active'))
 {
-    $link = strtolower($link);
-
-    $routeAction = strtolower(Route::currentRouteAction());
-    $routeName = strtolower(Route::currentRouteName());
-    $controller = explode('@', $routeAction)[0];
-    $currentParameters = Route::current()->parameters();
-
-    $matches = array($routeAction, $controller);
-
-    if ($routeName)
+    function active($link, $parameters = [], $active = 'active', $inactive = null)
     {
-        $matches[] = $routeName;
-        $matches = array_merge($matches, explode('.', $routeName));
+        $link = strtolower($link);
+
+        $routeAction = strtolower(Route::currentRouteAction());
+        $routeName = strtolower(Route::currentRouteName());
+        $controller = explode('@', $routeAction)[0];
+        $currentParameters = Route::current()->parameters();
+
+        $matches = array($routeAction, $controller);
+
+        if ($routeName)
+        {
+            $matches[] = $routeName;
+            $matches = array_merge($matches, explode('.', $routeName));
+        }
+
+        $match = in_array($link, $matches);
+
+        foreach ($parameters as $parameter)
+        {
+            $match = $match && in_array($parameter, $currentParameters);
+        }
+
+        return $match ? $active : $inactive;
     }
-
-    $match = in_array($link, $matches);
-
-    foreach ($parameters as $parameter)
-    {
-        $match = $match && in_array($parameter, $currentParameters);
-    }
-
-    return $match ? $active : $inactive;
 }

@@ -1,8 +1,6 @@
 <?php namespace Codesleeve\Platform\Seeds;
 
-use DB, Hash, Seeder;
-use Codesleeve\Platform\Models\Role;
-use Codesleeve\Platform\Models\User;
+use DB, Hash, Seeder, Sentry, Exception;
 
 class Platform extends Seeder
 {
@@ -12,10 +10,8 @@ class Platform extends Seeder
      */
     public function run()
     {
-        $this->createRole('admin', 'Admin');
-        $this->createUser('admin', 'password', 'Admin', 'User', 'admin');
-
-        print "Seeded base admin user for platform." . PHP_EOL;
+        $this->createGroup('Admin');
+        $this->createUser('admin', 'password', 'Admin', 'User', 'Admin');
     }
 
     /**
@@ -24,52 +20,48 @@ class Platform extends Seeder
      */
     protected function createUser($email, $password, $firstName, $lastName, $role = null)
     {
-        $user = DB::table('users')->where('email', $email)->first();
-
-        if ($user)
+        try
         {
-            return;
+            $user = Sentry::createUser([
+                'email'     => $email,
+                'password'  => $password,
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'activated' => true,
+            ]);
+
+            if (!$role) return;
+
+            $group = Sentry::findGroupByName($role);
+
+            $user->addGroup($group);
         }
-
-        $userId = DB::table('users')->insertGetId([
-            'email' => $email,
-            'password' => Hash::make($password),
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-            'created_at' => date("Y-m-d H:i:s"),
-            'updated_at' => date("Y-m-d H:i:s")
-        ]);
-
-        if (!$role)
+        catch(\Exception $e)
         {
-            return;
+            // this user probably already exists... so ignore the exception
         }
-
-        $role = Role::where('name', $role)->first();
-        DB::table('roles_users')->insert([
-            'role_id' => $role->id,
-            'user_id' => $userId
-        ]);
     }
 
     /**
      * Create roles if they don't exist already
      *
      */
-    protected function createRole($name, $alias)
+    protected function createGroup($name)
     {
-        $role = DB::table('roles')->where('name', $name)->first();
-
-        if ($role) {
-            return;
+        try
+        {
+            $group = \Sentry::createGroup(
+            [
+                'name'        => $name,
+                'permissions' => [
+                    'superuser' => 1,
+                ],
+            ]);
         }
-
-        DB::table('roles')->insert([
-            'name' => $name,
-            'alias' => $alias,
-            'created_at' => date("Y-m-d H:i:s"),
-            'updated_at' => date("Y-m-d H:i:s")
-        ]);
+        catch (\Exception $e)
+        {
+            // this group probably already exists... so ignore the exception
+        }
     }
 
 }

@@ -41,7 +41,46 @@ class PlatformSetupCommand extends Command
         $this->yes = $this->option('yes');
 
         $this->copySetupFolder();
+
         $this->setupSentry();
+
+        $this->setupPlatformAdmin();
+
+        $this->setupPlatformPublish();
+    }
+
+    /**
+     * Setup core platform user
+     *
+     * @return void
+     */
+    private function setupPlatformAdmin()
+    {
+        $this->line("Set up Platform admin user");
+
+        $continue = $this->yes ? 'y' : $this->ask("Would you like to continue? [Y/n]");
+
+        if (strtolower(trim($continue)) != 'n')
+        {
+            Artisan::call('db:seed', array('--class' => 'Codesleeve\Platform\Seeds\Platform'));
+        }
+    }
+
+    /**
+     * Setup platform publish package (if installed)
+     *
+     * @return
+     */
+    public function setupPlatformPublish()
+    {
+        $this->line("Set up Platform Publish migrations (if not installed this does nothing)");
+
+        $continue = $this->yes ? 'y' : $this->ask("Would you like to continue? [Y/n]");
+
+        if (strtolower(trim($continue)) != 'n')
+        {
+            Artisan::call('migrate', array('--package' => 'codesleeve/platform-publish'));
+        }
     }
 
     /**
@@ -51,10 +90,14 @@ class PlatformSetupCommand extends Command
      */
     private function setupSentry()
     {
-        $this->line("We are setting up cartalyst sentry package for permissions");
+        $this->line("Set up Sentry package for users, groups and permissions");
 
-        Artisan::call('migrate', array('--package' => 'Cartalyst/Sentry'));
-        Artisan::call('migrate', array('cartalyst/sentry'));
+        $continue = $this->yes ? 'y' : $this->ask("Would you like to continue? [Y/n]");
+
+        if (strtolower(trim($continue)) != 'n')
+        {
+            Artisan::call('migrate', array('--package' => 'cartalyst/sentry'));
+        }
     }
 
     /**
@@ -67,7 +110,7 @@ class PlatformSetupCommand extends Command
         $projectRoot = realpath(base_path());
         $platformRoot = realpath(__DIR__ . '/../../../setup');
 
-        $this->line("We are going to copy some common files and setup to your project root.");
+        $this->line("Copy common files and setup to your project root");
 
         $continue = $this->yes ? 'y' : $this->ask("Would you like to continue? [Y/n]");
 

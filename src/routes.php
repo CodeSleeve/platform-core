@@ -29,8 +29,8 @@ Route::group(Config::get('platform::routing'), function()
 		// dashboard
 		Route::get('/', ["as" => "$prefix.dashboard", "uses" => "{$namespace}\HomeController@dashboard"]);
 
-		// roles
-		Route::resource('roles', "{$namespace}\RoleController");
+		// groups
+		Route::resource('groups', "{$namespace}\GroupController");
 
 		// users
 		Route::resource('users', "{$namespace}\UserController");

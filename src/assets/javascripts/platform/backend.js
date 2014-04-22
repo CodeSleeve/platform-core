@@ -18,7 +18,7 @@
 //= require chosen/chosen.jquery
 //= require bootbox/bootbox
 //= require summernote/summernote
-//= require config/ajaxSetup
-//= require summernote/summernote
+//= require_tree config
 //= require_tree bindings
+//= require_tree controllers
 //= require wysiwyg

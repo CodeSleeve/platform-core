@@ -19,11 +19,11 @@
 			'priority' => 100,
 		],
 		[
-			'title' => 'Roles',
-			'icon' => 'fa-eye',
-			'url' => platform_route('roles.index'),
-			'shown' => can('update', 'Role'),
-			'active' => 'roles',
+			'title' => 'Groups',
+			'icon' => 'fa-group',
+			'url' => platform_route('groups.index'),
+			'shown' => can('update', 'Group'),
+			'active' => 'groups',
 		],
 		[
 			'title' => 'Users',

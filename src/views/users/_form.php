@@ -41,9 +41,9 @@
 	</div>
 
 	<div class="form-group">
-		<label for="role_ids[]">Roles</label>
+		<label for="group_ids[]">Groups</label>
 
-		<?= Form::select('role_ids[]', $user->available_roles, $user->selected_roles, ['class' => 'chosen form-control', 'multiple']) ?>
+		<?= Form::select('group_ids[]', $user->available_groups, $user->selected_groups, ['class' => 'chosen form-control', 'multiple']) ?>
 	</div>
 
 	<div class="actions">
