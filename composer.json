@@ -18,7 +18,7 @@
         "codesleeve/asset-pipeline": "dev-master",
         "codesleeve/stapler": "dev-master",
         "codesleeve/fixture": "dev-master",
-        "cartalyst/sentry": "2.1.*",
+        "cartalyst/sentry": "2.1.*"
     },
     "require-dev": {
         "phpspec/phpspec": "2.0.*@dev"
