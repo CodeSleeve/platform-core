@@ -17,7 +17,8 @@
 //= require twitter/js/bootstrap
 //= require chosen/chosen.jquery
 //= require bootbox/bootbox
+//= require summernote/summernote
 //= require config/ajaxSetup
 //= require summernote/summernote
 //= require_tree bindings
-//= include_tree platform-publish-scripts
+//= require wysiwyg

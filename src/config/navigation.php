@@ -16,6 +16,7 @@
 			'url' => platform_route('dashboard'),
 			'shown' => can('view', 'Dashboard'),
 			'active' => 'dashboard',
+			'priority' => 100,
 		],
 		[
 			'title' => 'Roles',

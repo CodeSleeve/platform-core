@@ -19,6 +19,9 @@
         "codesleeve/stapler": "dev-master",
         "codesleeve/fixture": "dev-master"
     },
+    "require-dev": {
+        "phpspec/phpspec": "2.0.*@dev"
+    },
     "autoload": {
         "classmap": [
             "src/migrations"
