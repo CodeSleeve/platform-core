@@ -1,5 +1,6 @@
 <?php namespace Codesleeve\Platform;
 
+use Illuminate\Foundation\AliasLoader;
 use App, Config, DirectoryIterator, Redirect, View;
 
 class CoreServiceProvider extends \Illuminate\Support\ServiceProvider
@@ -52,6 +53,9 @@ class CoreServiceProvider extends \Illuminate\Support\ServiceProvider
 
 		App::register('Codesleeve\AssetPipeline\AssetPipelineServiceProvider');
 		App::register('Codesleeve\Stapler\StaplerServiceProvider');
+		App::register('Cartalyst\Sentry\SentryServiceProvider');
+
+		AliasLoader::getInstance()->alias('Sentry', 'Cartalyst\Sentry\Facades\Laravel\Sentry');
 	}
 
 	/**

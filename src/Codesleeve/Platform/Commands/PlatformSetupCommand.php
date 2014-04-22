@@ -1,5 +1,6 @@
 <?php namespace Codesleeve\Platform\Commands;
 
+use Artisan;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
@@ -40,6 +41,13 @@ class PlatformSetupCommand extends Command
         $this->yes = $this->option('yes');
 
         $this->copySetupFolder();
+        $this->setupSentry();
+    }
+
+    private function setupSentry()
+    {
+        Artisan::call('migrate', array('--package' => 'Cartalyst/Sentry'));
+        Artisan::call('migrate', array('cartalyst/sentry');
     }
 
     /**
