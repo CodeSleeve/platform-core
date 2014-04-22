@@ -44,8 +44,15 @@ class PlatformSetupCommand extends Command
         $this->setupSentry();
     }
 
+    /**
+     * Setup sentry stuff
+     *
+     * @return void
+     */
     private function setupSentry()
     {
+        $this->line("We are setting up cartalyst sentry package for permissions");
+
         Artisan::call('migrate', array('--package' => 'Cartalyst/Sentry'));
         Artisan::call('migrate', array('cartalyst/sentry'));
     }
