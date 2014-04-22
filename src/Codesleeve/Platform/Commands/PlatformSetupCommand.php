@@ -47,7 +47,7 @@ class PlatformSetupCommand extends Command
     private function setupSentry()
     {
         Artisan::call('migrate', array('--package' => 'Cartalyst/Sentry'));
-        Artisan::call('migrate', array('cartalyst/sentry');
+        Artisan::call('migrate', array('cartalyst/sentry'));
     }
 
     /**
