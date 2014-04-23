@@ -13,10 +13,10 @@
 		</div>
 	</div>
 
+	<h4>Permissions <small>(<a href="#" ng-click="addPermission()"><i class="fa fa-plus"></i></a>)</small></h4>
+
 	<div class="form-group row">
 		<div class="col-md-6">
-			<label for="name">Permissions (<a href="#" ng-click="addPermission()"><i class="fa fa-plus"></i></a>)</label>
-
 			<div class="input-group permissions-region" ng-repeat="permission in permissions track by $index">
 				<input type="text" name="permissions[]" class="form-control" placeholder="Permission name" value="{{permission}}">
 				<span ng-click="removePermission($index)" class="input-group-addon"><i class="fa fa-times"></i></span>

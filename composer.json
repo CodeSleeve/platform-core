@@ -21,7 +21,8 @@
         "cartalyst/sentry": "2.1.*"
     },
     "require-dev": {
-        "phpspec/phpspec": "2.0.*@dev"
+        "phpspec/phpspec": "2.0.*@dev",
+        "itsgoingd/clockwork": "1.*"
     },
     "autoload": {
         "classmap": [
