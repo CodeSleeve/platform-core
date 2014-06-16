@@ -52,7 +52,7 @@ class CoreServiceProvider extends \Illuminate\Support\ServiceProvider
 		$base = __DIR__;
 
 		App::register('Codesleeve\AssetPipeline\AssetPipelineServiceProvider');
-		App::register('Codesleeve\Stapler\StaplerServiceProvider');
+		App::register('Codesleeve\LaravelStapler\LaravelStaplerServiceProvider');
 		App::register('Cartalyst\Sentry\SentryServiceProvider');
 
 		AliasLoader::getInstance()->alias('Sentry', 'Cartalyst\Sentry\Facades\Laravel\Sentry');
