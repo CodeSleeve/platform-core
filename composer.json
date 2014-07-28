@@ -12,11 +12,17 @@
             "email": "travis@codesleeve.com"
         }
     ],
+	"repositories": [
+        {
+        	"type": "vcs",
+        	"url": "https://github.com/ccwittwer/laravel-stapler"
+        }
+    ],    
     "require": {
         "php": ">=5.3.0",
         "illuminate/support": "4.1.*",
         "codesleeve/asset-pipeline": "2.*",
-        "codesleeve/laravel-stapler": "1.0.*",
+        "codesleeve/laravel-stapler": "dev-master",
         "cartalyst/sentry": "2.1.*"
     },
     "require-dev": {
