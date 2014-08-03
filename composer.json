@@ -20,7 +20,7 @@
     ],    
     "require": {
         "php": ">=5.3.0",
-        "illuminate/support": "4.1.*",
+        "illuminate/support": "4.2.*",
         "codesleeve/asset-pipeline": "2.*",
         "codesleeve/laravel-stapler": "dev-master",
         "cartalyst/sentry": "2.1.*"
